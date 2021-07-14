@@ -1,51 +1,57 @@
 <div class="container">
-	<div class="sidebar">
-		<div class="cardsa">
-			<h3>Filters</h3>
-			<div class="widget">
-				<div class="header_title">Launch Year</div>
-				<div class="widget-border"></div>
-				<div class="header">
-					<a [class.active]="selectedIndex['year'] === i" (click)="filterByYear(year);setIndex('year', i)"
-						*ngFor="let year of years;let i = index">{{year}}</a>
+	<h1>SpaceX Launch Programs</h1>
+	<div id="main" class="spacex-main">
+		<div class="sidebar">
+			<div class="cardsa">
+				<h3>Filters</h3>
+				<div class="widget">
+					<div class="header_title">Launch Year</div>
+					<div class="widget-border"></div>
+					<div class="header">
+						<div class="link" *ngFor="let year of years;let i = index">
+							<a [class.active]="selectedIndex['year'] === i"
+								(click)="filterByYear(year);setIndex('year', i)"
+								>{{year}}</a>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="widget">
-				<div class="header_title">Successful Launch</div>
-				<div class="widget-border"></div>
-				<div class="header">
-					<a [class.active]="selectedIndex['launch'] === i"
-						(click)="filterByLaunch(state);setIndex('launch', i)"
-						*ngFor="let state of conditions;let i = index">{{ state }}</a>
+				<div class="widget">
+					<div class="header_title">Successful Launch</div>
+					<div class="widget-border"></div>
+					<div class="header">
+						<a [class.active]="selectedIndex['launch'] === i"
+							(click)="filterByLaunch(state);setIndex('launch', i)"
+							*ngFor="let state of conditions;let i = index">{{ state }}</a>
+					</div>
 				</div>
-			</div>
-			<div class="widget">
-				<div class="header_title">Successful Landing</div>
-				<div class="widget-border"></div>
-				<div class="header">
-					<a [class.active]="selectedIndex['landing'] === i"
-						(click)="filterByLanding(state);setIndex('landing', i)"
-						*ngFor="let state of conditions;let i = index">{{ state }}</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="content">
-		<div class="cards">
-			<div class="card" *ngFor="let list of httpData">
-				<a href="{{list.links.article_link}}" target="_blank">
-					<img src="{{list.links.mission_patch_small}}"
-						alt="{{list.mission_name}} #{{list.flight_number}}"></a>
-				<div class="body">
-					<div class="flight"><strong>{{list.mission_name}} #{{list.flight_number}}</strong></div>
-					<div class="mission_id"><strong>Mission Ids</strong>: {{list.mission_id[0]}}</div>
-					<div class="launch_year"><strong>Launch Year</strong>: {{list.launch_year}}</div>
-					<div class="is_launch_successful"><strong>Successful Launch:</strong> {{list.upcoming}}</div>
-					<div class="is_landing_successful"><strong>Successful Landing:</strong>
-						{{list.rocket.first_stage.cores['land_success']}}</div>
+				<div class="widget">
+					<div class="header_title">Successful Landing</div>
+					<div class="widget-border"></div>
+					<div class="header">
+						<a [class.active]="selectedIndex['landing'] === i"
+							(click)="filterByLanding(state);setIndex('landing', i)"
+							*ngFor="let state of conditions;let i = index">{{ state }}</a>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="dev">Developed by : Balamurugan S</div>
+		<div class="content">
+			<div class="cards">
+				<div class="card" *ngFor="let list of httpData">
+					<a href="{{list.links.article_link}}" target="_blank">
+						<img src="{{list.links.mission_patch_small}}"
+							alt="{{list.mission_name}} #{{list.flight_number}}"></a>
+					<div class="body">
+						<div class="flight"><strong>{{list.mission_name}} #{{list.flight_number}}</strong></div>
+						<div class="mission_id"><strong>Mission Ids</strong>: {{list.mission_id[0]}}</div>
+						<div class="launch_year"><strong>Launch Year</strong>: {{list.launch_year}}</div>
+						<div class="is_launch_successful"><strong>Successful Launch:</strong> {{list.upcoming}}</div>
+						<div class="is_landing_successful"><strong>Successful Landing:</strong>
+							{{list.rocket.first_stage.cores['land_success']}}</div>
+					</div>
+				</div>
+			</div>
+			<div class="dev">Developed by : Balamurugan S</div>
+		</div>
 	</div>
 </div>
