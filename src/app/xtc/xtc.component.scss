@@ -16,6 +16,7 @@
   background-color: #fff;
   h3 {
     margin: 0;
+    padding: 5px;
   }
 }
 .content {
@@ -109,12 +110,12 @@
     width: 100%;
   }
   .sidebar {
-	  margin: 0;
-	  width: auto;
-	  a {
-		width: 35%;
-		text-align: center;
-	  }
+    margin: 0;
+    width: auto;
+    a {
+      width: 35%;
+      text-align: center;
+    }
   }
   .cards {
     display: grid;

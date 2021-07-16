@@ -10,8 +10,7 @@
 					<div class="header">
 						<div class="link" *ngFor="let year of years;let i = index">
 							<a [class.active]="selectedIndex['year'] === i"
-								(click)="filterByYear(year);setIndex('year', i)"
-								>{{year}}</a>
+								(click)="filterByYear(year);setIndex('year', i)">{{year}}</a>
 						</div>
 					</div>
 				</div>
