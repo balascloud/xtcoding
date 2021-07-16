@@ -4,13 +4,14 @@
 		<div class="sidebar">
 			<div class="cardsa">
 				<h3>Filters</h3>
+				<a *ngIf="filterSet" [ngClass]="['clear-filter']" (click)="clearFilters()">Clear Filter(s)</a>
 				<div class="widget">
 					<div class="header_title">Launch Year</div>
 					<div class="widget-border"></div>
 					<div class="header">
 						<div class="link" *ngFor="let year of years;let i = index">
 							<a [class.active]="selectedIndex['year'] === i"
-								(click)="filterByYear(year);setIndex('year', i)">{{year}}</a>
+								(click)="filterBy('year', year);setIndex('year', i)">{{year}}</a>
 						</div>
 					</div>
 				</div>
@@ -19,7 +20,7 @@
 					<div class="widget-border"></div>
 					<div class="header">
 						<a [class.active]="selectedIndex['launch'] === i"
-							(click)="filterByLaunch(state);setIndex('launch', i)"
+							(click)="filterBy('launch', state);setIndex('launch', i)"
 							*ngFor="let state of conditions;let i = index">{{ state }}</a>
 					</div>
 				</div>
@@ -28,7 +29,7 @@
 					<div class="widget-border"></div>
 					<div class="header">
 						<a [class.active]="selectedIndex['landing'] === i"
-							(click)="filterByLanding(state);setIndex('landing', i)"
+							(click)="filterBy('landing', state);setIndex('landing', i)"
 							*ngFor="let state of conditions;let i = index">{{ state }}</a>
 					</div>
 				</div>
@@ -42,9 +43,14 @@
 							alt="{{list.mission_name}} #{{list.flight_number}}"></a>
 					<div class="body">
 						<div class="flight"><strong>{{list.mission_name}} #{{list.flight_number}}</strong></div>
-						<div class="mission_id"><strong>Mission Ids</strong>: {{list.mission_id[0]}}</div>
+						<div class="mission_id"><strong>Mission Ids</strong>:
+							<ul>
+								<li *ngFor="let missionId of list.mission_id">{{missionId}}</li>
+							</ul>
+						</div>
 						<div class="launch_year"><strong>Launch Year</strong>: {{list.launch_year}}</div>
-						<div class="is_launch_successful"><strong>Successful Launch:</strong> {{list.upcoming}}</div>
+						<div class="is_launch_successful"><strong>Successful Launch:</strong> {{list.launch_success}}
+						</div>
 						<div class="is_landing_successful"><strong>Successful Landing:</strong>
 							{{list.rocket.first_stage.cores['land_success']}}</div>
 					</div>

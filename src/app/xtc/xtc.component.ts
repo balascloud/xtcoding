@@ -12,12 +12,9 @@ import { XTCAPIService } from './xtc.services';
 export class XtcComponent implements OnInit {
 
   httpData: any;
-  originalData: any;
-
   currentYear: number = 2021;
-  yearsCount = 5;
   years: any = [];
-  conditions: any = ['True', 'False'];
+  conditions: any = ['true', 'false'];
 
   constructor(private apiService: XTCAPIService) { }
 
@@ -40,39 +37,23 @@ export class XtcComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.displaydata();
-    this.getYears();
+    this.loadData(1, this.params);
   }
 
   currentFilters: any = {
-    'year': null,
-    'launch_success': null,
-    'land_success': null
-  }
-  filterByYear(year: any) {
-    let _data = this.originalData;
-    if (year) {
-      this.httpData = _data.filter((data: any) => (data.launch_year == year));
-    }
+    'launch_success': '',
+    'land_success': '',
+    'launch_year': ''
   }
 
-
-  filterByLaunch(launch: any) {
-    let _launchState = (launch == 'True') ? true : false;
-    let _data = this.originalData;
-    if (launch) {
-      this.currentFilters.launch = _launchState;
-      this.displaydata(100, _launchState)
-    }
-  }
-
-  filterByLanding(landing: any) {
-    let _landingState = (landing == 'True') ? true : false;
-    let _data = this.originalData;
-    if (landing) {
-      this.currentFilters.landing = _landingState;
-      this.httpData = _data.filter((data: any) => (data.rocket.first_stage.cores['land_success'] == _landingState));
-    }
+  filterBy(type: string, value: any) {
+    if (type == 'year')
+      this.currentFilters.launch_year = value;
+    else if (type == 'launch')
+      this.currentFilters.launch_success = (value == 'true') ? true : false;
+    else if (type == 'landing')
+      this.currentFilters.land_success = (value == 'true') ? true : '';
+    this.loadData(false, this.currentFilters);
   }
 
   removeDuplicates(arr: []) {
@@ -84,32 +65,53 @@ export class XtcComponent implements OnInit {
   }
 
   selectedIndex: any = {
-    'year': null,
-    'launch': null,
-    'landing': null
+    'year': '',
+    'launch': '',
+    'landing': ''
   };
 
   setIndex(type: string, index: number) {
+    this.filterSet = true;
     this.selectedIndex[type] = index;
   }
 
+  params: any = {
+    launch_success: '',
+    land_success: '',
+    launch_year: '',
+    limit: 100
+  };
 
-  displaydata(limit = 100, launch_success = true) {
-    this.apiService.getData(limit, launch_success).subscribe((data: any) => {
-      this.originalData = data;
-      this.httpData = data;
-      if (this.currentFilters.year) {
-        let _data = this.httpData.filter((data: any) => (data.launch_year == this.currentFilters.year));
-        this.httpData = _data
+  loadData(initial: any = false, params: any) {
+    this.apiService.getData(params).subscribe((data: any) => {
+      if (data) {
+        /*
+        data.forEach((value: any) => {
+          if (value.rocket.first_stage.cores['land_success'] == '') {
+            value.rocket.first_stage.cores['land_success'] = false;
+          }
+        }, data);
+        */
+        this.httpData = data;
+        if (initial)
+          this.getYears();
       }
-      if (this.currentFilters.launch) {
-        let _data = this.httpData.filter((data: any) => (data.launch_year == this.currentFilters.year));
-        this.httpData = _data
-      }
-      if (this.currentFilters.landing) {
-        let _data = this.httpData.filter((data: any) => (data.rocket.first_stage.cores['land_success'] == this.currentFilters.year));
-        this.httpData = _data
-      }      
     });
+  }
+
+  filterSet: boolean = false;
+  clearFilters() {
+    this.filterSet = false;
+    this.currentFilters = {
+      'launch_year': '',
+      'launch_success': '',
+      'land_success': ''
+    }
+    this.selectedIndex = {
+      'year': '',
+      'launch': '',
+      'landing': ''
+    };
+    this.loadData(false, this.currentFilters);
   }
 }
