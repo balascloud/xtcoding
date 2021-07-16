@@ -4,17 +4,17 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { XtcComponent } from './xtc/xtc.component';
+import { XTCModule } from './xtc/xtc.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    XtcComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    XTCModule
   ],
   providers: [],
   bootstrap: [AppComponent]

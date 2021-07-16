@@ -38,7 +38,7 @@
 		<div class="content">
 			<div class="cards">
 				<div class="card" *ngFor="let list of httpData">
-					<a href="{{list.links.article_link}}" target="_blank">
+					<a href="{{list.links.article_link}}" target="_blank" title="{{list.mission_name}} #{{list.flight_number}}">
 						<img src="{{list.links.mission_patch_small}}"
 							alt="{{list.mission_name}} #{{list.flight_number}}"></a>
 					<div class="body">
